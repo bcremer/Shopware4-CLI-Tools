@@ -1,0 +1,91 @@
+#!/bin/bash
+
+# -----------------------------------------------------------------------------------------------------------
+# Shopware 4 CLI Tools
+#
+# shopware AG (c) 2012
+#
+# Provides the ability to install Shopware 4 using the command line (bash).
+#
+# The script provides the following functionality:
+# - Install Shopware 4 via the shell through files.shopware.de
+# - Setting up the basic shop configuration
+# - Clear the shop cache including the staging system
+# - Create a backup of the database and the shop files
+# - Install the demo dataset from files.shopware.de
+#
+# To use the script, create a file named config.ini along the sw4-cli-tools.sh file. A sample configuration
+# could be found in the file "config.sample.ini"
+#
+# @category  Shopware
+# @package   Shopware\Tools\CliTools
+# @copyright Copyright (c) 2012, shopware AG (http://www.shopware.de)
+# -----------------------------------------------------------------------------------------------------------
+
+# Basic variable declaration
+BASEDIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Get utils functions
+source ${BASEDIR}/.sw4-cli-tools/utils.sh
+
+
+# Output script header
+output_header
+
+# Required program(s)
+req_progs=(curl mysql php)
+for p in ${req_progs[@]}; do
+  hash "$p" 2>&- || \
+  { echo -e >&2 "${bldred}[!] Required program \"$p\" not installed.${txtrst}"; echo; exit 1; }
+done
+
+# Check if config.ini exists...
+if [ ! -f "${BASEDIR}/.sw4-cli-tools/config.ini" ]; then
+    echo
+    echo -e "${bldred}[!] config.ini doesn't exists. ${txtrst}"
+
+    exit 1
+fi
+
+# Create tmp directory
+create_tmp
+
+# Display main menu in a loop
+while :
+do
+    # Output script header
+    output_header
+
+    # Parse config file
+    cfg_parser "${BASEDIR}/.sw4-cli-tools/config.ini"
+    cfg.section.script
+
+    # List available operations
+    create_info_headline "Please choose your operation:"
+    echo -e "# ${txtgrn}[1]${txtrst} Install shop"
+    echo -e "# ${txtgrn}[2]${txtrst} Clear shop cache"
+    echo -e "# ${txtgrn}[3]${txtrst} Backup shop"
+    echo -e "# ${txtgrn}[4]${txtrst} Install demo data"
+    echo -e "# ${txtgrn}[5]${txtrst} Clear \"ClI Tools\" tmp folder"
+    echo -e "# ${txtgrn}[6]${txtrst} Edit config.ini with \"${editor}\""
+    echo -e "# ${txtgrn}[0]${txtrst} Exit script"
+    echo
+    echo -n "Enter your menu choice [0-6]: "
+    read yourch
+
+    # Just call sub scripts there...
+    case ${yourch} in
+        1) source ${BASEDIR}/.sw4-cli-tools/install.sh ;;
+        2) source ${BASEDIR}/.sw4-cli-tools/clear-cache.sh ;;
+        3) source ${BASEDIR}/.sw4-cli-tools/backup.sh ;;
+        4) source ${BASEDIR}/.sw4-cli-tools/install-demo.sh ;;
+        5) remove_tmp ;;
+        6) if [ -z "$(which ${editor})" ]; then
+              create_error "The configured editor \"${editor}\" is not installed on your system."; echo; exit 1;
+           fi
+           ${editor} ${BASEDIR}/.sw4-cli-tools/config.ini ;;
+        0) exit 0 ;;
+        *) create_error "Oopps!!! Please select choice 0, 1, 2, 3, 5 or 6";
+           echo "Press Enter to continue..." ; read ;;
+    esac
+done

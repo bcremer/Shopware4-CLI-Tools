@@ -1,7 +1,7 @@
 # Shopware 4 CLI Tools
 
 - **Version**: 1.0
-- **Release Date**: 20th December 2012
+- **Release Date**: 21th December 2012
 - **License**: MIT (see LICENSE-MIT)
 
 ## Overview
@@ -22,7 +22,6 @@ You could install the toolset to any location you want, but we recommend install
 ### Using Git
 
 ```bash
-git clone
 git clone https://github.com/ShopwareAG/Shopware4-CLI-Tools.git && cd Shopware4-CLI-Tools && sudo mv sw4-cli-tools /usr/local/bin/sw4-cli-tools && sudo mv .sw4-cli-tools /usr/local/bin/.sw4-cli-tools && sudo chmod -R 777 /usr/local/bin/sw4-cli-tools && sudo chmod -R 777 /usr/local/bin/.sw4-cli-tools
 ```
 

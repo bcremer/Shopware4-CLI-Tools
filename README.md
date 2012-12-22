@@ -27,7 +27,7 @@ git clone https://github.com/ShopwareAG/Shopware4-CLI-Tools.git && cd Shopware4-
 
 ### Git-free installation
 ```bash
-cd /usr/local/bin && curl -#L https://github.com/ShopwareAG/Shopware4-CLI-Tools/tarball/master | tar -xzv --strip-components 1 --exclude={README.md,LICENSE-MIT} && sudo chmod -R 777 /usr/local/bin/sw4-cli-tools && sudo chmod -R 777 /usr/local/bin/.sw4-cli-tools 
+cd /usr/local/bin && curl -#L https://github.com/ShopwareAG/Shopware4-CLI-Tools/tarball/master | sudo tar -xzv --strip-components 1 --exclude={README.md,LICENSE-MIT} && sudo chmod -R 777 /usr/local/bin/sw4-cli-tools && sudo chmod -R 777 /usr/local/bin/.sw4-cli-tools 
 ```
 
 ### Specify the `$PATH`

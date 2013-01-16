@@ -60,9 +60,16 @@ copy_files_to_path() {
     create_headline "[${COUNT}.] Copy install files to shop path"
     cfg.section.shop
     if [ ! -d "${install_dir}" ]; then
-        mkdir ${install_dir}
+        mkdir ${install_dir} -p
     fi
-    cp -R ${TMPDIR}/install/ ${install_dir}/ &
+
+    rc=$?
+    if [[ $rc != 0 ]] ; then
+        create_error "Could not create install directory"
+        echo; exit 1
+    fi
+
+    cp -R ${TMPDIR}/install/. ${install_dir}/ &
     echo -n "Copying files..."
     spinner $!
     echo -e "${txtgrn}Done!${txtrst}"

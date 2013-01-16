@@ -13,9 +13,12 @@ source ${BASEDIR}/.sw4-cli-tools/utils.sh
 # Parse config file
 cfg_parser "${BASEDIR}/.sw4-cli-tools/config.ini"
 
-# Check if MySQL is running...
-if [ -z "$(ps aux | awk '{ print $11 }' | grep 'mysql')" ]; then
-    create_error "MySQL isn't running. Please start it to install Shopware 4"
+## Verify MySQL-Connection
+cfg.section.database
+mysql -u ${user} -p${pass} -e "use ${database};" > /dev/null 2>&1
+rc=$?
+if [[ $rc != 0 ]] ; then
+    create_error "Could not connect to MySQL-Server. Please review your MySQL-Credentials"
     echo; exit 1
 fi
 

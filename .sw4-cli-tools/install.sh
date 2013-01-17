@@ -15,10 +15,18 @@ cfg_parser "${BASEDIR}/.sw4-cli-tools/config.ini"
 
 ## Verify MySQL-Connection
 cfg.section.database
-mysql -u ${user} -p${pass} -e "use ${database};" > /dev/null 2>&1
+
+mysql -u ${user} -p${pass} -e ";" > /dev/null 2>&1
 rc=$?
 if [[ $rc != 0 ]] ; then
     create_error "Could not connect to MySQL-Server. Please review your MySQL-Credentials"
+    echo; exit 1
+fi
+
+mysql -u ${user} -p${pass} -e "use ${database};" > /dev/null 2>&1
+rc=$?
+if [[ $rc != 0 ]] ; then
+    create_error "Could not use Database '${database}'. Please review your MySQL-Databasename"
     echo; exit 1
 fi
 

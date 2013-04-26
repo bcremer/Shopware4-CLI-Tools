@@ -41,7 +41,7 @@ for p in ${req_progs[@]}; do
   { echo -e >&2 "${bldred}[!] Required program \"$p\" not installed.${txtrst}"; echo; exit 1; }
 done
 
-set_config_file "$@"
+parse_options "$@"
 
 # Create tmp directory
 create_tmp
@@ -57,17 +57,21 @@ do
     cfg.section.script
 
     # List available operations
-    create_info_headline "Please choose your operation:"
-    echo -e "# ${txtgrn}[1]${txtrst} Install shop"
-    echo -e "# ${txtgrn}[2]${txtrst} Clear shop cache"
-    echo -e "# ${txtgrn}[3]${txtrst} Backup shop"
-    echo -e "# ${txtgrn}[4]${txtrst} Install demo data"
-    echo -e "# ${txtgrn}[5]${txtrst} Clear \"ClI Tools\" tmp folder"
-    echo -e "# ${txtgrn}[6]${txtrst} Edit config.ini with \"${editor}\""
-    echo -e "# ${txtgrn}[0]${txtrst} Exit script"
-    echo
-    echo -n "Enter your menu choice [0-6]: "
-    read yourch
+    if [ -z "$OPERATION" ]; then
+        create_info_headline "Please choose your operation:"
+        echo -e "# ${txtgrn}[1]${txtrst} Install shop"
+        echo -e "# ${txtgrn}[2]${txtrst} Clear shop cache"
+        echo -e "# ${txtgrn}[3]${txtrst} Backup shop"
+        echo -e "# ${txtgrn}[4]${txtrst} Install demo data"
+        echo -e "# ${txtgrn}[5]${txtrst} Clear \"ClI Tools\" tmp folder"
+        echo -e "# ${txtgrn}[6]${txtrst} Edit config.ini with \"${editor}\""
+        echo -e "# ${txtgrn}[0]${txtrst} Exit script"
+        echo
+        echo -n "Enter your menu choice [0-6]: "
+        read yourch
+    else
+        yourch=$OPERATION
+    fi
 
     # Just call sub scripts there...
     case ${yourch} in
@@ -84,4 +88,9 @@ do
         *) create_error "Oopps!!! Please select choice 0, 1, 2, 3, 5 or 6";
            echo "Press Enter to continue..." ; read ;;
     esac
+
+    if [ ! -z "$OPERATION" ]; then
+        exit
+    fi
+
 done

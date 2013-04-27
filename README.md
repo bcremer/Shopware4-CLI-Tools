@@ -42,6 +42,19 @@ If you've installed the toolset in `/usr/local/bin`, you simply could run the sc
 sw4-cli-tools
 ```
 
+You can optionally pass a configuration file to configure multiple shopware instances on one machine:
+```bash
+sw4-cli-tools -c /path/to/shop.ini
+sw4-cli-tools -c /path/to/other-shop.ini
+```
+
+You can use flags to directly perform operations:
+```bash
+-i Install
+-d Install Demo Data
+-k Clear Cache
+```
+
 Before you start any operation please modify the `config.ini` using the menu option `[6] Edit config.ini with "vim"` according to your needs.
 
 ## Release History

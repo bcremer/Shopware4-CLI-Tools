@@ -95,3 +95,34 @@ create_tmp() {
 remove_tmp() {
     rm -rf ${TMPDIR}/*
 }
+
+parse_options() {
+    CONFIG_FILE="${BASEDIR}/.sw4-cli-tools/config.ini"
+    OPERATION=""
+
+    while getopts "c:idk" OPTION
+    do
+        case $OPTION in
+            c)
+                CONFIG_FILE=$OPTARG
+                ;;
+            i)
+                OPERATION=1
+                ;;
+            d)
+                OPERATION=4
+                ;;
+            k)
+                OPERATION=2
+                ;;
+        esac
+    done
+
+    # Check if config.ini exists...
+    if [ ! -f "$CONFIG_FILE" ]; then
+        echo
+        echo -e "${bldred}[!] config file at $CONFIG_FILE doesn't exist. ${txtrst}"
+
+        exit 1
+    fi
+}

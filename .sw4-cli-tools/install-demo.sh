@@ -54,5 +54,9 @@ echo -e "${txtgrn}Done!${txtrst}"
 
 create_info_headline "[!] Keep in mind that your username and password is now \"demo\"!"
 
-echo "All done! Back to the main menu..."
-read
+if [ -z "$OPERATION" ]; then
+    echo "All done! Back to the main menu..."
+    read
+else
+    echo "Done"
+fi 

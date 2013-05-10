@@ -242,5 +242,9 @@ prepare_config
 set_permissions
 
 echo
-echo "All done! Back to the main menu..."
-read
+if [ -z "$OPERATION" ]; then
+    echo "All done! Back to the main menu..."
+    read
+else
+    echo "Done"
+fi 

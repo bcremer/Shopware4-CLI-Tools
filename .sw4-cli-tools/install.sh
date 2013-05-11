@@ -10,9 +10,6 @@ COUNT=1
 # Get utils functions
 source ${BASEDIR}/.sw4-cli-tools/utils.sh
 
-# Parse config file
-cfg_parser "${BASEDIR}/.sw4-cli-tools/config.ini"
-
 ## Verify MySQL-Connection
 cfg.section.database
 
@@ -245,5 +242,9 @@ prepare_config
 set_permissions
 
 echo
-echo "All done! Back to the main menu..."
-read
+if [ -z "$OPERATION" ]; then
+    echo "All done! Back to the main menu..."
+    read
+else
+    echo "Done"
+fi 

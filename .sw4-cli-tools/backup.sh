@@ -8,8 +8,6 @@ DATE=`date +"%Y-%m-%d_%H:%M"`
 # Get utils functions
 source ${BASE}/utils.sh
 
-# Parse config file
-cfg_parser "${BASE}/config.ini"
 cfg.section.script
 
 # Set backup path if it's configured...

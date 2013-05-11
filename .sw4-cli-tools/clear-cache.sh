@@ -5,9 +5,6 @@ BASE="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Get utils functions
 source ${BASEDIR}/.sw4-cli-tools/utils.sh
 
-# Parse config file
-cfg_parser "${BASE}/config.ini"
-
 # Clear template cache
 create_headline "[1.] Clear template cache"
 echo -n "Deleting template cache files..."
@@ -52,5 +49,9 @@ if [ ${staging} = 'y' ]; then
 fi
 
 echo
-echo "All done! Back to the main menu..."
-read
+if [ -z "$OPERATION" ]; then
+    echo "All done! Back to the main menu..."
+    read
+else
+    echo "Done"
+fi 

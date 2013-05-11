@@ -8,9 +8,6 @@ SOURCE_URL="http://files.shopware.de/download.php?package=demo"
 # Get utils functions
 source ${BASEDIR}/.sw4-cli-tools/utils.sh
 
-# Parse config file
-cfg_parser "${BASEDIR}/.sw4-cli-tools/config.ini"
-
 # Download demo data
 create_headline "[1.] Download latest version of demo-data from files.shopware.de"
 if [ -f "${TMPDIR}/demo.zip" ]; then
@@ -57,5 +54,9 @@ echo -e "${txtgrn}Done!${txtrst}"
 
 create_info_headline "[!] Keep in mind that your username and password is now \"demo\"!"
 
-echo "All done! Back to the main menu..."
-read
+if [ -z "$OPERATION" ]; then
+    echo "All done! Back to the main menu..."
+    read
+else
+    echo "Done"
+fi 

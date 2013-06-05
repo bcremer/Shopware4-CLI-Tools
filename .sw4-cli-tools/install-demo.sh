@@ -47,7 +47,7 @@ echo -e "${txtgrn}Done!${txtrst}"
  # Install shopware database
 create_headline "[4.] Import demo.sql"
 cfg.section.database
-mysql -u ${user} -p${pass} ${database} < ${TMPDIR}/demo/demo.sql &
+mysql -u ${user} -p${pass} -h ${host} -P ${port} ${database} < ${TMPDIR}/demo/demo.sql &
 echo -n "Importing demo.sql..."
 spinner $!
 echo -e "${txtgrn}Done!${txtrst}"

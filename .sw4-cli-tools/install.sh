@@ -13,14 +13,14 @@ source ${BASEDIR}/.sw4-cli-tools/utils.sh
 ## Verify MySQL-Connection
 cfg.section.database
 
-mysql -u ${user} -p${pass} -e ";" > /dev/null 2>&1
+mysql -u ${user} -p${pass} -h ${host} -P ${port} -e ";" > /dev/null 2>&1
 rc=$?
 if [[ $rc != 0 ]] ; then
     create_error "Could not connect to MySQL-Server. Please review your MySQL-Credentials"
     echo; exit 1
 fi
 
-mysql -u ${user} -p${pass} -e "use ${database};" > /dev/null 2>&1
+mysql -u ${user} -p${pass} -h ${host} -P ${port} -e "use ${database};" > /dev/null 2>&1
 rc=$?
 if [[ $rc != 0 ]] ; then
     create_error "Could not use Database '${database}'. Please review your MySQL-Databasename"
@@ -93,7 +93,7 @@ create_database() {
     Q2="CREATE DATABASE IF NOT EXISTS ${database};"
     SQL="${Q1}${Q2}"
     echo -n "Create database..."
-    mysql -u ${user} -p${pass} -e "${SQL}"
+    mysql -u ${user} -p${pass} -h ${host} -P ${port} -e "${SQL}"
     echo -e "${txtgrn}Done!${txtrst}"
 
     COUNT=$((${COUNT}+1))
@@ -104,7 +104,7 @@ create_database() {
 import_tables() {
     # Install shopware database
     create_headline "[${COUNT}.] Import shopware database"
-    mysql -u ${user} -p${pass} ${database} < ${install_dir}/install/assets/sql/sw4_clean.sql &
+    mysql -u ${user} -p${pass} -h ${host} -P ${port} ${database} < ${install_dir}/install/assets/sql/sw4_clean.sql &
     echo -n "Importing shopware tables..."
     spinner $!
     echo -e "${txtgrn}Done!${txtrst}"
@@ -126,7 +126,7 @@ create_admin_user() {
     );"
     echo -n "Creating admin-user \"${user}\"..."
     cfg.section.database
-    mysql -u ${user} -p${pass} ${database} -e "${SQL}" &
+    mysql -u ${user} -p${pass} -h ${host} -P ${port} ${database} -e "${SQL}" &
     spinner $!
     echo -e "${txtgrn}Done!${txtrst}"
 
@@ -145,7 +145,7 @@ set_shop_mail() {
     SQL="${Q1}${Q2}"
     echo -n "Setting eMail address to \"${email}\"..."
     cfg.section.database
-    mysql -u ${user} -p${pass} ${database} -e "${SQL}" &
+    mysql -u ${user} -p${pass} -h ${host} -P ${port} ${database} -e "${SQL}" &
     spinner $!
     echo -e "${txtgrn}Done!${txtrst}"
 
@@ -164,7 +164,7 @@ set_shop_name() {
     SQL="${Q1}${Q2}"
     echo -n "Setting shop name to \"${name}\"..."
     cfg.section.database
-    mysql -u ${user} -p${pass} ${database} -e "${SQL}" &
+    mysql -u ${user} -p${pass} -h ${host} -P ${port} ${database} -e "${SQL}" &
     spinner $!
     echo -e "${txtgrn}Done!${txtrst}"
 
@@ -178,7 +178,7 @@ set_shop_host() {
     SQL="UPDATE s_core_shops SET name ='${name}', locale_id = 1, currency_id = 1, host = '${host}', base_path = '${path}', hosts = '${host}' WHERE \`default\` = 1;"
     echo -n "Setting shop host and path..."
     cfg.section.database
-    mysql -u ${user} -p${pass} ${database} -e "${SQL}" &
+    mysql -u ${user} -p${pass} -h ${host} -P ${port} ${database} -e "${SQL}" &
     spinner $!
     echo -e "${txtgrn}Done!${txtrst}"
     COUNT=$((${COUNT}+1))

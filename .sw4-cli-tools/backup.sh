@@ -40,7 +40,7 @@ echo -e "${txtgrn}Done!${txtrst}"
 create_headline "[3.] Create database backup"
 cfg.section.database
 echo -n "Backup up database \"${database}\"..."
-mysqldump -u ${user} -p${pass} ${database} > ${BACKUPDIR}/backup-${database}-${DATE}.sql &
+mysqldump -u ${user} -p${pass} -h ${host} -P ${port} ${database} > ${BACKUPDIR}/backup-${database}-${DATE}.sql &
 spinner $!
 cd ${BACKUPDIR}
 tar rf ${BACKUPDIR}/backup-${DATE}.tar backup-${database}-${DATE}.sql

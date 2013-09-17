@@ -5,6 +5,8 @@ BASE="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Get utils functions
 source ${BASEDIR}/.sw4-cli-tools/utils.sh
 
+cfg.section.shop
+
 # Clear template cache
 create_headline "[1.] Clear template cache"
 echo -n "Deleting template cache files..."
@@ -12,15 +14,27 @@ rm -rf ${install_dir}/cache/templates/* &
 spinner $!
 echo -e "${txtgrn}Done!${txtrst}"
 
-create_headline "[2.] Clear database cache"
-echo -n "Deleting database cache files..."
-rm -rf ${install_dir}/cache/database/* &
+create_headline "[2.] Clear general cache"
+echo -n "Deleting general cache files..."
+rm -rf ${install_dir}/cache/general/* &
 spinner $!
 echo -e "${txtgrn}Done!${txtrst}"
 
 create_headline "[3.] Delete Proxies"
-echo -n "Deleting Proxies files..."
-rm -rf ${install_dir}/engine/Shopware/Proxies/* &
+echo -n "Deleting proxy-files..."
+rm -rf ${install_dir}/cache/proxies/* &
+spinner $!
+echo -e "${txtgrn}Done!${txtrst}"
+
+create_headline "[4.] Delete Doctrine Proxies"
+echo -n "Deleting Doctrine proxy-files..."
+rm -rf ${install_dir}/cache/doctrine/proxies/* &
+spinner $!
+echo -e "${txtgrn}Done!${txtrst}"
+
+create_headline "[5.] Delete Doctrine Filecache"
+echo -n "Deleting Doctrine filecache..."
+rm -rf ${install_dir}/cache/doctrine/filecache/* &
 spinner $!
 echo -e "${txtgrn}Done!${txtrst}"
 
@@ -37,13 +51,13 @@ if [ ${staging} = 'y' ]; then
 
     create_headline "[2.] Clear staging database cache"
     echo -n "Deleting staging database cache files..."
-    rm -rf ${install_dir}/staging/cache/database/* &
+    rm -rf ${install_dir}/staging/cache/general/* &
     spinner $!
     echo -e "${txtgrn}Done!${txtrst}"
 
     create_headline "[3.] Delete staging Proxies"
     echo -n "Deleting staging Proxies files..."
-    rm -rf ${install_dir}/engine/Shopware/ProxiesStaging/* &
+    rm -rf ${install_dir}/staging/cache/doctrine/proxies/* &
     spinner $!
     echo -e "${txtgrn}Done!${txtrst}"
 fi
@@ -54,4 +68,4 @@ if [ -z "$OPERATION" ]; then
     read
 else
     echo "Done"
-fi 
+fi

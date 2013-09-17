@@ -219,8 +219,6 @@ set_permissions() {
     chmod -R 777 ${install_dir}/engine/Library/Mpdf/tmp
     chmod -R 777 ${install_dir}/engine/Library/Mpdf/ttfontdata
     chmod -R 777 ${install_dir}/engine/Shopware/Plugins/Community
-    chmod -R 777 ${install_dir}/engine/Shopware/Proxies
-    chmod -R 777 ${install_dir}/engine/Shopware/Models/Attribute
     chmod -R 777 ${install_dir}/media
     echo -e "${txtgrn}Done!${txtrst}"
 
@@ -247,4 +245,4 @@ if [ -z "$OPERATION" ]; then
     read
 else
     echo "Done"
-fi 
+fi

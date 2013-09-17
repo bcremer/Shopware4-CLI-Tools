@@ -1,6 +1,5 @@
 # Shopware 4 CLI Tools
 
-- **Version**: 1.0
 - **Release Date**: 21th December 2012
 - **License**: MIT (see LICENSE-MIT)
 
@@ -56,6 +55,3 @@ You can use flags to directly perform operations:
 ```
 
 Before you start any operation please modify the `config.ini` using the menu option `[6] Edit config.ini with "vim"` according to your needs.
-
-## Release History
-- 2012-12-20 - Initial release
